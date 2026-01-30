@@ -2,34 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AFC Fast Food | Order Online</title>
+<title>AFC Fast Food – Order Online</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  background:#fff8e1;
-  color:#333;
+  background:#ffeb3b;
+  color:#111;
 }
 
 /* HEADER */
 .header{
-  background:linear-gradient(135deg,#d32f2f,#fbc02d);
+  background:#d32f2f;
   color:#fff;
-  padding:20px;
+  padding:16px;
   text-align:center;
+  font-size:24px;
+  font-weight:bold;
 }
-.header h1{margin:0;font-size:28px}
-.header p{margin:6px 0 0;font-size:14px}
 
-/* SECTION */
-.section{
-  padding:18px;
+/* BANNER */
+.banner{
+  margin:14px;
+  border-radius:16px;
+  overflow:hidden;
 }
-.section h2{
-  margin:0 0 12px;
-  color:#d32f2f;
+.banner img{
+  width:100%;
+  display:block;
 }
 
 /* MENU */
@@ -37,127 +39,136 @@ body{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
-}
-.item{
-  background:#fff;
-  border-radius:14px;
   padding:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+.card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+.card .info{
+  padding:10px;
   text-align:center;
 }
-.item h3{margin:6px 0;font-size:16px}
-.item p{margin:0;font-size:14px}
-.item button{
-  margin-top:10px;
+.card h3{
+  margin:4px 0;
+  font-size:16px;
+}
+.card p{
+  margin:4px 0;
+  font-weight:bold;
+}
+.card button{
+  margin-top:6px;
   width:100%;
-  padding:10px;
+  padding:8px;
   border:none;
-  border-radius:20px;
-  background:#25D366;
+  border-radius:8px;
+  background:#d32f2f;
   color:#fff;
-  font-size:14px;
   font-weight:bold;
 }
 
-/* LOCATION */
-.location{
-  background:#fff3cd;
-  border-radius:14px;
-  padding:14px;
-  font-size:14px;
-}
-
-/* FOOTER */
-.footer{
-  background:#d32f2f;
+/* CART */
+.cart{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#111;
   color:#fff;
-  text-align:center;
-  padding:14px;
-  font-size:13px;
-  margin-top:20px;
+  padding:12px;
 }
-
-/* FIX */
-@media(max-width:480px){
-  .menu{grid-template-columns:1fr}
+.cart button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#ff9800;
+  font-size:16px;
+  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <h1>🍔 AFC Fast Food</h1>
-  <p>Fresh & Crispy Fast Food • Order on WhatsApp</p>
+<div class="header">🍔 AFC FAST FOOD</div>
+
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1606755962773-d324e9a13086">
 </div>
 
-<!-- MENU -->
-<div class="section">
-  <h2>🔥 Our Menu</h2>
+<div class="menu" id="menu"></div>
 
-  <div class="menu">
-
-    <div class="item">
-      <h3>AFC Chicken Roll</h3>
-      <p>₹80</p>
-      <button onclick="order('AFC Chicken Roll - ₹80')">Order on WhatsApp</button>
-    </div>
-
-    <div class="item">
-      <h3>Chicken Cheese Makhani Roll</h3>
-      <p>₹100</p>
-      <button onclick="order('Chicken Cheese Makhani Roll - ₹100')">Order on WhatsApp</button>
-    </div>
-
-    <div class="item">
-      <h3>Chicken Bahubali Roll</h3>
-      <p>₹130</p>
-      <button onclick="order('Chicken Bahubali Roll - ₹130')">Order on WhatsApp</button>
-    </div>
-
-    <div class="item">
-      <h3>AFC Veg Roll</h3>
-      <p>₹80</p>
-      <button onclick="order('AFC Veg Roll - ₹80')">Order on WhatsApp</button>
-    </div>
-
-    <div class="item">
-      <h3>AFC Veg Cheese Roll</h3>
-      <p>₹100</p>
-      <button onclick="order('AFC Veg Cheese Roll - ₹100')">Order on WhatsApp</button>
-    </div>
-
-    <div class="item">
-      <h3>Chicken Sandwich</h3>
-      <p>₹80</p>
-      <button onclick="order('Chicken Sandwich - ₹80')">Order on WhatsApp</button>
-    </div>
-
-  </div>
+<div class="cart">
+  <div id="cartText">🛒 Cart empty</div>
+  <button onclick="orderWhatsApp()">Order on WhatsApp</button>
 </div>
 
-<!-- LOCATION -->
-<div class="section">
-  <h2>📍 Location</h2>
-  <div class="location">
-    Edhah Road, Stadium ke samne,<br>
-    Jaswantgarh
-  </div>
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  📞 Order on WhatsApp: <b>+91 89055 18433</b><br>
-  © AFC Fast Food
-</div>
-
-<!-- WHATSAPP SCRIPT -->
 <script>
-function order(item){
-  const number = "918905518433";
-  const msg = `Hello AFC Fast Food,%0A%0AMujhe ye order karna hai:%0A${item}%0A%0ADelivery / Pickup batayein.`;
-  window.open(`https://wa.me/${number}?text=${msg}`,"_blank");
+const phone = "918905518433";
+
+const items = [
+  {name:"AFC Chicken Roll", price:80, img:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec"},
+  {name:"Chicken Cheese Makhani Roll", price:100, img:"https://images.unsplash.com/photo-1604908554027-69e1a6b02a89"},
+  {name:"Chicken Bahubali Roll", price:130, img:"https://images.unsplash.com/photo-1618213837799-25d5552820d1"},
+  {name:"AFC Veg Roll", price:80, img:"https://images.unsplash.com/photo-1608032077018-c9f3b6e3b0e4"},
+  {name:"AFC Veg Cheese Roll", price:100, img:"https://images.unsplash.com/photo-1601050690597-df0568f70950"},
+  {name:"Chicken Sandwich", price:80, img:"https://images.unsplash.com/photo-1617196033257-d9b133cf03c5"}
+];
+
+let cart = [];
+
+const menu = document.getElementById("menu");
+const cartText = document.getElementById("cartText");
+
+items.forEach((item,i)=>{
+  menu.innerHTML += `
+    <div class="card">
+      <img src="${item.img}">
+      <div class="info">
+        <h3>${item.name}</h3>
+        <p>₹${item.price}</p>
+        <button onclick="addToCart(${i})">Add to Cart</button>
+      </div>
+    </div>
+  `;
+});
+
+function addToCart(i){
+  cart.push(items[i]);
+  updateCart();
+}
+
+function updateCart(){
+  if(cart.length===0){
+    cartText.innerText="🛒 Cart empty";
+    return;
+  }
+  let total = cart.reduce((s,i)=>s+i.price,0);
+  cartText.innerText = `🛒 Items: ${cart.length} | Total: ₹${total}`;
+}
+
+function orderWhatsApp(){
+  if(cart.length===0){
+    alert("Cart khaali hai bhai 😄");
+    return;
+  }
+  let msg = "Hello AFC Fast Food,%0A%0AMy Order:%0A";
+  let total = 0;
+  cart.forEach(i=>{
+    msg += `- ${i.name} ₹${i.price}%0A`;
+    total += i.price;
+  });
+  msg += `%0A*Total: ₹${total}*%0A%0AAddress: Edhah Road, Stadium ke samne, Jaswantgarh`;
+  window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
 }
 </script>
 
