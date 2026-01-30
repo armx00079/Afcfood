@@ -2,39 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>AFC Fast Food – Order Online</title>
+<title>AFC Fast Food</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  background:#ffeb3b;
-  color:#111;
+  background:#ffe600;
 }
-
-/* HEADER */
 .header{
-  background:#d32f2f;
-  color:#fff;
-  padding:16px;
   text-align:center;
-  font-size:24px;
+  font-size:26px;
   font-weight:bold;
+  padding:15px;
 }
-
-/* BANNER */
-.banner{
-  margin:14px;
-  border-radius:16px;
-  overflow:hidden;
-}
-.banner img{
-  width:100%;
-  display:block;
-}
-
-/* MENU */
 .menu{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -45,19 +27,16 @@ body{
   background:#fff;
   border-radius:16px;
   overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
+  box-shadow:0 6px 14px rgba(0,0,0,.25);
+  text-align:center;
 }
 .card img{
   width:100%;
-  height:120px;
+  height:140px;
   object-fit:cover;
 }
-.card .info{
-  padding:10px;
-  text-align:center;
-}
 .card h3{
-  margin:4px 0;
+  margin:8px 6px 0;
   font-size:16px;
 }
 .card p{
@@ -65,33 +44,31 @@ body{
   font-weight:bold;
 }
 .card button{
-  margin-top:6px;
-  width:100%;
-  padding:8px;
+  width:90%;
+  margin:8px auto 12px;
+  padding:10px;
   border:none;
-  border-radius:8px;
+  border-radius:12px;
   background:#d32f2f;
   color:#fff;
+  font-size:15px;
   font-weight:bold;
 }
-
-/* CART */
-.cart{
+.cart-bar{
   position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#111;
+  bottom:0;left:0;right:0;
+  background:#000;
   color:#fff;
-  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 14px;
 }
-.cart button{
-  width:100%;
-  padding:12px;
+.cart-bar button{
+  background:#ff9800;
   border:none;
   border-radius:10px;
-  background:#ff9800;
-  font-size:16px;
+  padding:10px 14px;
   font-weight:bold;
 }
 </style>
@@ -99,75 +76,72 @@ body{
 
 <body>
 
-<div class="header">🍔 AFC FAST FOOD</div>
-
-<div class="banner">
-  <img src="https://images.unsplash.com/photo-1606755962773-d324e9a13086">
-</div>
+<div class="header">🍔 AFC FAST FOOD 🍕</div>
 
 <div class="menu" id="menu"></div>
 
-<div class="cart">
+<div class="cart-bar">
   <div id="cartText">🛒 Cart empty</div>
-  <button onclick="orderWhatsApp()">Order on WhatsApp</button>
+  <button onclick="orderNow()">Order on WhatsApp</button>
 </div>
 
 <script>
 const phone = "918905518433";
 
 const items = [
-  {name:"AFC Chicken Roll", price:80, img:"https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec"},
-  {name:"Chicken Cheese Makhani Roll", price:100, img:"https://images.unsplash.com/photo-1604908554027-69e1a6b02a89"},
-  {name:"Chicken Bahubali Roll", price:130, img:"https://images.unsplash.com/photo-1618213837799-25d5552820d1"},
-  {name:"AFC Veg Roll", price:80, img:"https://images.unsplash.com/photo-1608032077018-c9f3b6e3b0e4"},
-  {name:"AFC Veg Cheese Roll", price:100, img:"https://images.unsplash.com/photo-1601050690597-df0568f70950"},
-  {name:"Chicken Sandwich", price:80, img:"https://images.unsplash.com/photo-1617196033257-d9b133cf03c5"}
+ {n:"Chicken Double Cheese Sandwich",p:"₹130",img:"Chicken-dbl-cheese-sandwich.jpg"},
+ {n:"Chicken Sandwich",p:"₹80",img:"Chicken-sandwich.jpg"},
+ {n:"AFC Chicken Roll",p:"₹80",img:"afc-chiken-roll.jpg"},
+ {n:"AFC Crunchy Burger",p:"₹80",img:"afc-crunchy-burger.jpg"},
+ {n:"AFC Special Peri Peri Pizza",p:"₹250",img:"afc-spe-peri-peri-pizza.jpg"},
+ {n:"AFC Veg Roll",p:"₹80",img:"afc-veg-roll.jpg"},
+ {n:"Chicken Strips (3pcs)",p:"₹60",img:"chicke-strips.jpg"},
+ {n:"Chicken Strips (6pcs)",p:"₹100",img:"chicke-strips.jpg"},
+ {n:"Chicken Cheese Makhani Roll",p:"₹100",img:"chicken-cheese-mkhni-gravy-roll.jpg"},
+ {n:"Chicken Kabab (4pcs)",p:"₹100",img:"chicken-kabab.jpg"},
+ {n:"Chicken Pop (10pcs)",p:"₹70",img:"chicken-pop.jpg"},
+ {n:"Chicken Pop (25pcs)",p:"₹100",img:"chicken-pop.jpg"},
+ {n:"Chicken Zombo Burger",p:"₹100",img:"chicken-zombo-burger.jpg"},
+ {n:"Chicken Cheese Zinger Burger",p:"₹80",img:"chike-cheese-zinger-burger.jpg"},
+ {n:"Chicken Hot Dog",p:"₹60",img:"chike-hotdog.jpg"},
+ {n:"Chicken Bahubali Roll",p:"₹130",img:"chiken-bahubali-roll.jpg"},
+ {n:"Chicken Burger",p:"₹80",img:"chiken-burger.jpg"},
+ {n:"Chicken Cheese Gravy Pop (25pcs)",p:"₹180",img:"chiken-cheese-gravy-pop.jpg"},
+ {n:"Chicken Cheese Sandwich",p:"₹100",img:"chiken-cheese-sandwich.jpg"},
+ {n:"Chicken Pizza",p:"₹160",img:"chiken-pizza-.jpg"},
+ {n:"Chicken Tandoori Pizza",p:"₹200",img:"chiken-tanddori-pizza.jpg"},
+ {n:"French Fries (Half)",p:"₹70",img:"french-fraies.jpg"},
+ {n:"French Fries (Full)",p:"₹100",img:"french-fraies.jpg"},
+ {n:"Paneer Cheese Pizza",p:"₹180",img:"paneer-chees-pizza.jpg"},
+ {n:"Student Veg Burger",p:"₹60",img:"student-veg-burger.jpg"},
+ {n:"Super Cheese Veg Burger",p:"₹80",img:"super-cheese-veg-burger.jpg"},
+ {n:"Veg Cheese Roll",p:"₹100",img:"veg-cheese-roll.jpg"},
+ {n:"Veg Pizza",p:"₹150",img:"veg-pizza.jpg"},
+ {n:"Veg Sandwich",p:"₹80 / ₹100 / ₹120",img:"veg-sandwich.jpg"},
 ];
 
-let cart = [];
+let cart=[];
 
-const menu = document.getElementById("menu");
-const cartText = document.getElementById("cartText");
-
-items.forEach((item,i)=>{
-  menu.innerHTML += `
-    <div class="card">
-      <img src="${item.img}">
-      <div class="info">
-        <h3>${item.name}</h3>
-        <p>₹${item.price}</p>
-        <button onclick="addToCart(${i})">Add to Cart</button>
-      </div>
-    </div>
-  `;
+const menu=document.getElementById("menu");
+items.forEach(i=>{
+  menu.innerHTML+=`
+  <div class="card">
+    <img src="images/${i.img}">
+    <h3>${i.n}</h3>
+    <p>${i.p}</p>
+    <button onclick="add('${i.n} - ${i.p}')">Add to Cart</button>
+  </div>`;
 });
 
-function addToCart(i){
-  cart.push(items[i]);
-  updateCart();
+function add(item){
+  cart.push(item);
+  document.getElementById("cartText").innerText =
+    "🛒 "+cart.length+" item(s) added";
 }
 
-function updateCart(){
-  if(cart.length===0){
-    cartText.innerText="🛒 Cart empty";
-    return;
-  }
-  let total = cart.reduce((s,i)=>s+i.price,0);
-  cartText.innerText = `🛒 Items: ${cart.length} | Total: ₹${total}`;
-}
-
-function orderWhatsApp(){
-  if(cart.length===0){
-    alert("Cart khaali hai bhai 😄");
-    return;
-  }
-  let msg = "Hello AFC Fast Food,%0A%0AMy Order:%0A";
-  let total = 0;
-  cart.forEach(i=>{
-    msg += `- ${i.name} ₹${i.price}%0A`;
-    total += i.price;
-  });
-  msg += `%0A*Total: ₹${total}*%0A%0AAddress: Edhah Road, Stadium ke samne, Jaswantgarh`;
+function orderNow(){
+  if(cart.length===0) return alert("Cart empty");
+  let msg="Hello AFC Fast Food,%0AOrder:%0A"+cart.join("%0A");
   window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
 }
 </script>
